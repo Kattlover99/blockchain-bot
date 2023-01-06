@@ -37,8 +37,8 @@ import("./handlers/onGetFreeCoins").then(({default: handler}) => bot.callbackQue
 
 // Send coins handlers
 import("./handlers/sendCoins/onStart").then(({default: handler}) => bot.hears(/send coins/i, handler));
-import("./handlers/sendCoins/onAccountAddress").then(({default: handler}) => bot.on("msg", handler));
-import("./handlers/sendCoins/onAmount").then(({default: handler}) => bot.on("msg", handler));
+import("./handlers/sendCoins/onAccountAddress").then(({default: handler}) => bot.on("message:text", handler));
+import("./handlers/sendCoins/onAmount").then(({default: handler}) => bot.on("message:text", handler));
 
 // Handle bot errors
 bot.catch((error) => {
