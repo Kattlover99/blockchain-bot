@@ -2,6 +2,7 @@ import {Keyboard, Middleware} from "grammy";
 import ContextModel from "../../models/Context";
 import {$db} from "../../helpers/makeDb";
 import {$blockchain} from "../../helpers/Blockchain";
+import {printHumanAmount} from "../../helpers/misc";
 
 const onStart: Middleware<ContextModel> = async(ctx, next) => {
 
@@ -30,7 +31,7 @@ const onStart: Middleware<ContextModel> = async(ctx, next) => {
   // Prompt for transaction amount
   ctx.session.state = "sendCoins.waitingForTransactionAmount";
   return ctx.reply(`
-    Ok. Now enter amount of your transaction. You currently have <b>${balance.toFixed(2)}</b> coins
+    Ok. Now enter amount of your transaction. You currently have <b>${printHumanAmount(balance)}</b> coins
   `.replace(/^ +/gm, ""), {
     parse_mode: "HTML",
     reply_markup: new Keyboard().text("↪ Main menu").resized()

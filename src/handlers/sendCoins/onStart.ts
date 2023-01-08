@@ -1,10 +1,16 @@
 import {HearsMiddleware, Keyboard} from "grammy";
 import ContextModel from "../../models/Context";
+import {$blockchain} from "../../helpers/Blockchain";
 
-const onStart: HearsMiddleware<ContextModel> = (ctx, next) => {
+const onStart: HearsMiddleware<ContextModel> = async(ctx, next) => {
 
   if(ctx.session.state) {
     return next();
+  }
+
+  const balance = await $blockchain.getAccountBalance(ctx.$user.key.hash);
+  if(balance <= 0) {
+    return ctx.reply("❌ You have no coins to transfer");
   }
 
   ctx.session.state = "sendCoins.waitingForAccountAddress";

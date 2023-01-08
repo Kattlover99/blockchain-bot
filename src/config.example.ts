@@ -8,5 +8,7 @@ export default {
 
   REDIS: {
     db: 1
-  }
+  },
+
+  BOT_ADMIN_ID: 5656390784
 };

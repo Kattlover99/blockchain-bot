@@ -27,7 +27,7 @@
   },
 
   "description": "A Telegram Blockchain bot",
-  "keywords": ["telegram", "bot", "blockchain", "cryptocyrrency", "rsa", "signing"],
+  "keywords": ["telegram", "bot", "blockchain", "cryptocurrency", "rsa", "signing"],
   "author": {
     "name": "Alex Congritta",
     "email": "congritta@gmail.com",

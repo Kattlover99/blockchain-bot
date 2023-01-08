@@ -46,6 +46,12 @@ bot.catch((error) => {
 
   consola.error($error);
 
+  try {
+    error.ctx.session.state = null;
+    error.ctx.session.data = null;
+  }
+  catch { /* empty */
+  }
   error.ctx.reply(`
     ❌ <b>An error occured during processing your message</b>:
 

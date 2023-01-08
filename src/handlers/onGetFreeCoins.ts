@@ -6,8 +6,15 @@ import {$blockchain} from "../helpers/Blockchain";
 import crypto from "crypto";
 import {$db} from "../helpers/makeDb";
 import {$redis} from "../helpers/makeRedis";
+import config from "../config";
+import {printHumanAmount} from "../helpers/misc";
 
 const onGetFreeCoins: CallbackQueryMiddleware<ContextModel> = async(ctx) => {
+
+  if(ctx.from.id !== config.BOT_ADMIN_ID) {
+    await ctx.answerCallbackQuery();
+    return ctx.reply("Contact @congritta");
+  }
 
   const lastBlockchainNode = await $blockchain.getLastBlock();
 
@@ -18,7 +25,7 @@ const onGetFreeCoins: CallbackQueryMiddleware<ContextModel> = async(ctx) => {
     transaction: {
       from: "",
       to: ctx.$user.key.hash,
-      amount: new Double(10),
+      amount: new Double(1000),
       signature: ""
     }
   };
@@ -31,7 +38,7 @@ const onGetFreeCoins: CallbackQueryMiddleware<ContextModel> = async(ctx) => {
   await $redis.del(`balance/${ctx.$user.key.hash}`);
 
   return ctx.answerCallbackQuery({
-    text: "10 coins credited to your account",
+    text: `${printHumanAmount(1000)} coins credited to your account`,
     show_alert: true
   });
 };

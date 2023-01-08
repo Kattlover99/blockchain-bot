@@ -1,6 +1,7 @@
 import {HearsMiddleware} from "grammy";
 import ContextModel from "../models/Context";
 import {$db} from "../helpers/makeDb";
+import {printHumanAmount} from "../helpers/misc";
 
 const onTransactionsHistory: HearsMiddleware<ContextModel> = async(ctx, next) => {
 
@@ -21,8 +22,8 @@ const onTransactionsHistory: HearsMiddleware<ContextModel> = async(ctx, next) =>
     const isTransactionIncoming = block.transaction.to === ctx.$user.key.hash;
 
     transactionsHistory += `
-      <b>${isTransactionIncoming ? "⬇ Received" : "⬆ Sent"} ${(+block.transaction.amount).toFixed(2)} coins</b>
-      <i>${block.createdAt.toLocaleString("en")}</i> (UTC)
+      <b>${isTransactionIncoming ? "⬇ Received" : "⬆ Sent"} ${printHumanAmount(+block.transaction.amount)} coins</b>
+      <i>${block.createdAt.toISOString()}</i> (UTC)
       <code>${isTransactionIncoming ? block.transaction.from : block.transaction.to}</code>
     `;
   }
