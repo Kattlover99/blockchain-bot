@@ -60,7 +60,7 @@ export default class Blockchain {
           }
         }
       ]).toArray()) {
-        await $redis.incrby(`balance/${walletAddress}`, transaction.incomingAmount);
+        await $redis.incrbyfloat(`balance/${walletAddress}`, transaction.incomingAmount);
       }
 
       // Calculate sum of outgoing transactions
@@ -77,7 +77,7 @@ export default class Blockchain {
           }
         }
       ]).toArray()) {
-        await $redis.decrby(`balance/${walletAddress}`, transaction.outgoingAmount);
+        await $redis.incrbyfloat(`balance/${walletAddress}`, Math.abs(transaction.outgoingAmount) * -1);
       }
     }
 

@@ -19,6 +19,9 @@ const onStart: Middleware<ContextModel> = async(ctx, next) => {
   if(amount === 0) {
     return ctx.reply("❌ You can't send 0 coins");
   }
+  // if(amount < 0) {
+  //   return ctx.reply("❌ Enter a positive number");
+  // }
 
   // Get sender's current balance
   const balance = await $blockchain.getAccountBalance(ctx.$user.key.hash);

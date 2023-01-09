@@ -20,7 +20,7 @@ const onStart: Middleware<ContextModel> = async(ctx, next) => {
   };
 
   // Search an account by address
-  const receiver = $db.users.findOne({
+  const receiver = await $db.users.findOne({
     _id: {$ne: ctx.$user._id},
     "key.hash": accountAddress
   });
